@@ -25,6 +25,21 @@ end
 gem 'therubyracer'
 gem 'jquery-rails'
 
+
+group :development do
+  gem 'pry'
+  gem 'pry-doc'
+  gem 'awesome_print'
+  gem 'rdoc-tags'
+  gem 'libnotify'
+  gem 'capistrano'
+  gem 'capistrano-ext'
+  gem 'capistrano_colors'
+  gem 'guard'
+  gem 'guard-rails'
+  gem 'guard-bundler'
+end
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
