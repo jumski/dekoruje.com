@@ -11,9 +11,6 @@ end
 
 module DekorujeCom
   class Application < Rails::Application
-    config.middleware.use "SeoAssist"
-    config.middleware.use "RedirectLegacyProductUrl"
-
     config.to_prepare do
       #loads application's model / class decorators
       Dir.glob(File.join(File.dirname(__FILE__), "../app/**/*_decorator*.rb")) do |c|
