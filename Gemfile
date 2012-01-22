@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
 gem 'rails', '3.1.3'
-gem 'spree'
+gem 'spree', '1.0.0.rc2'
 gem 'spree_i18n', :git => 'git://github.com/jumski/spree_i18n.git'
 
 # Bundle edge Rails instead:
