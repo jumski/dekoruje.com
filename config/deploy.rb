@@ -13,7 +13,7 @@ ssh_options[:forward_agent] = true
 # SCM opts
 set :scm, :git
 set :repository, "git://github.com/jumski/dekoruje.com.git"
-set :branch, 'production'
+set :branch, 'origin/production'
 set :scm_verbose, true
 
 # default deploy is on staging
@@ -22,6 +22,7 @@ set :user, 'deploy'
 set :deploy_to,  "/home/deploy/#{application}"
 
 before 'bundle:install', 'deploy:symlink_log'
+before 'bundle:install', 'deploy:symlink_spree'
 after 'deploy', 'nginx:restart'
 
 namespace :deploy do
@@ -42,11 +43,11 @@ namespace :deploy do
     run "cd #{current_path}; git fetch origin; git reset --hard #{branch}"
   end
 
-  desc "Rollback a single commit."
-  task :rollback, :except => { :no_release => true } do
-    set :branch, "HEAD^"
-    default
-  end
+  # desc "Rollback a single commit."
+  # task :rollback, :except => { :no_release => true } do
+  #   set :branch, "HEAD^"
+  #   default
+  # end
 end
 
 namespace :nginx do
@@ -62,6 +63,11 @@ namespace :deploy do
     run "ln -nfs #{deploy_to}/shared/log #{release_path}/log"
   end
 
+  desc "Symlinks public/spree/ folder"
+  task :symlink_spree, :roles => :app do
+    run "ln -nfs #{deploy_to}/shared/spree #{release_path}/public/spree"
+  end
+
   desc 'Seeds production database with initial data'
   task :seed_production_database, :roles => :app do
     puts "\n\e[0;31mSeeding production database will ERASE all Page data"
@@ -69,6 +75,6 @@ namespace :deploy do
     proceed = STDIN.gets[0..0] rescue nil
     exit(1) unless proceed == 'y' || proceed == 'Y'
 
-    run "cd #{current_path} && FIRST_PRODUCTION_DEPLOY=true RAILS_ENV=production bundle exec rake db:seed"
+    run "bundle exec rake db:seed RAILS_ENV=#{rails_env} "
   end
 end
