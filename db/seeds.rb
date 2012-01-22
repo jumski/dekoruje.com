@@ -6,9 +6,9 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-
-SpreeCore::Engine.load_seed if defined?(SpreeCore)
-SpreeAuth::Engine.load_seed if defined?(SpreeAuth)
-
 Spree::Config.set(:allow_ssl_in_production => false,
                   :default_locale => :pl)
+
+
+Spree::Core::Engine.load_seed if defined?(Spree::Core)
+Spree::Auth::Engine.load_seed if defined?(Spree::Auth)

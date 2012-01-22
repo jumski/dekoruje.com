@@ -272,7 +272,7 @@ DEPENDENCIES
   rails (= 3.1.3)
   rdoc-tags
   sass-rails (~> 3.1.5)
-  spree (= 1.0.0.rc2)
+  spree
   spree_i18n!
   sqlite3
   therubyracer
