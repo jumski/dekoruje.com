@@ -13,47 +13,26 @@ ssh_options[:forward_agent] = true
 # SCM opts
 set :scm, :git
 set :repository, "git://github.com/jumski/dekoruje.com.git"
-set :branch, 'origin/production'
+set :branch, 'master'
 set :scm_verbose, true
+set :deploy_via, :remote_cache
 
 # default deploy is on staging
-server application, :web, :db, :app
+role :app, application
+role :web, application
+role :db, application, :primary => true
 set :user, 'deploy'
 set :deploy_to,  "/home/deploy/#{application}"
+set :use_sudo, false
 
 before 'bundle:install', 'deploy:symlink_log'
 before 'bundle:install', 'deploy:symlink_spree'
 after 'deploy', 'nginx:restart'
 
-namespace :deploy do
-  desc "Deploy the MFer"
-  task :default do
-    update
-    restart
-    cleanup
-  end
-
-  desc "Setup a GitHub-style deployment."
-  task :setup, :except => { :no_release => true } do
-    run "git clone #{repository} #{current_path}"
-  end
-
-  desc "Update the deployed code."
-  task :update_code, :except => { :no_release => true } do
-    run "cd #{current_path}; git fetch origin; git reset --hard #{branch}"
-  end
-
-  # desc "Rollback a single commit."
-  # task :rollback, :except => { :no_release => true } do
-  #   set :branch, "HEAD^"
-  #   default
-  # end
-end
-
 namespace :nginx do
   desc "Restarts apache webserver"
   task :restart, :roles => :web do
-    run "sudo killall nginx && sudo /etc/init.d/nginx start"
+    run "sudo killall nginx && sudo /opt/nginx/sbin/nginx"
   end
 end
 
