@@ -10,5 +10,5 @@
 SpreeCore::Engine.load_seed if defined?(SpreeCore)
 SpreeAuth::Engine.load_seed if defined?(SpreeAuth)
 
-Spree::Config.set(:allow_ssl_in_production => true,
+Spree::Config.set(:allow_ssl_in_production => false,
                   :default_locale => :pl)
