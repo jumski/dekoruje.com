@@ -2,10 +2,10 @@ source 'http://rubygems.org'
 
 gem 'rails', '3.1.3'
 
-# gem 'spree',            git: 'git://github.com/spree/spree.git'
 gem 'spree', '1.0.0'
-# gem 'spree_i18n',       git: 'git://github.com/jumski/spree_i18n.git'
-# gem 'spree_blue_theme', git: 'git://github.com/spree/spree_blue_theme.git'
+gem 'stringex', '1.3.0'
+gem 'spree_i18n',       git: 'git://github.com/jumski/spree_i18n.git'
+gem 'spree_blue_theme', git: 'git://github.com/spree/spree_blue_theme.git'
 
 gem 'sqlite3'
 
